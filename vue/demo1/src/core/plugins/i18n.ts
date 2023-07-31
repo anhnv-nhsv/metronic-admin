@@ -62,7 +62,10 @@ const messages = {
     customers: "Customers",
     gettingStarted: "Getting Started",
     customersListing: "Customers Listing",
+    customerScoreListing: "Customers Score",
     customerDetails: "Customers Details",
+    statistics: "Statistics",
+    requestStatistics: "Request Statistics"
   },
   es: {
     dashboard: "Tablero",
@@ -126,6 +129,9 @@ const messages = {
     gettingStarted: "Empezando",
     customersListing: "Listado De Clientes",
     customerDetails: "Detalles De Los Clientes",
+    customerScoreListing: "Customers Score",
+    statistics: "Statistics",
+    requestStatistics: "Request Statistics"
   },
   de: {
     dashboard: "Instrumententafel",
@@ -189,6 +195,9 @@ const messages = {
     gettingStarted: "Einstieg",
     customersListing: "Kundenauflistung",
     customerDetails: "Kundenangaben",
+    customerScoreListing: "Customers Score",
+    statistics: "Statistics",
+    requestStatistics: "Request Statistics"
   },
   ja: {
     dashboard: "ダッシュボード",
@@ -252,6 +261,9 @@ const messages = {
     gettingStarted: "入門",
     customersListing: "顧客のリスト",
     customerDetails: "お客様の詳細",
+    customerScoreListing: "Customers Score",
+    statistics: "Statistics",
+    requestStatistics: "Request Statistics"
   },
   fr: {
     dashboard: "Générateur de mise",
@@ -315,6 +327,9 @@ const messages = {
     gettingStarted: "Commencer",
     customersListing: "Liste Des Clients",
     customerDetails: "Détails Des Clients",
+    customerScoreListing: "Customers Score",
+    statistics: "Statistics",
+    requestStatistics: "Request Statistics"
   },
 };
 

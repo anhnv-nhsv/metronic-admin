@@ -104,6 +104,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/apps/customers/CustomerDetails.vue"),
       },
       {
+        path: "/apps/customers/customer-score-list",
+        name: "apps-customer-score-list",
+        component: () => import("@/views/apps/customers/CustomerScoreList.vue"),
+      },
+      {
+        path: "/apps/statistics/request-statistics",
+        name: "apps-request-statistics",
+        component: () => import("@/views/apps/statistics/RequestStatistics.vue"),
+      },
+      {
         path: "/apps/chat/private-chat",
         name: "apps-private-chat",
         component: () => import("@/views/apps/chat/Chat.vue"),
@@ -261,7 +271,7 @@ router.beforeEach(() => {
   // reset config to initial state
   store.commit(Mutations.RESET_LAYOUT_CONFIG);
 
-  store.dispatch(Actions.VERIFY_AUTH);
+  // store.dispatch(Actions.VERIFY_AUTH);
 
   // Scroll page to top on every route change
   setTimeout(() => {

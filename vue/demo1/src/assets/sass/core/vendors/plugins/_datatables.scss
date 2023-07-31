@@ -69,6 +69,10 @@ table.dataTable > thead {
             display: none !important;
         }
     }
+
+    .text-middle {
+        vertical-align: middle;
+    }
 }
 
 table.dataTable > thead .sorting_asc:after {

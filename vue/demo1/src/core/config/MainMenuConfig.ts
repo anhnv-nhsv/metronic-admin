@@ -245,6 +245,10 @@ const DocMenuConfig = [
             heading: "customerDetails",
             route: "/apps/customers/customer-details",
           },
+          {
+            heading: "customerScoreListing",
+            route: "/apps/customers/customer-score-list",
+          },
         ],
       },
       {
@@ -267,6 +271,18 @@ const DocMenuConfig = [
           },
         ],
       },
+      {
+        sectionTitle: "statistics",
+        route: "/statistics",
+        svgIcon: "media/icons/duotune/general/gen025.svg",
+        fontIcon: "bi-layers",
+        sub: [
+          {
+            heading: "requestStatistics",
+            route: "/apps/statistics/request-statistics",
+          },
+        ],
+      }
     ],
   },
 ];

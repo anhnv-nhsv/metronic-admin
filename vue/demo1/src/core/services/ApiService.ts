@@ -19,7 +19,7 @@ class ApiService {
   public static init(app: App<Element>) {
     ApiService.vueInstance = app;
     ApiService.vueInstance.use(VueAxios, axios);
-    ApiService.vueInstance.axios.defaults.baseURL = "http://localhost";
+    ApiService.vueInstance.axios.defaults.baseURL = process.env.VUE_APP_API_URL;
   }
 
   /**

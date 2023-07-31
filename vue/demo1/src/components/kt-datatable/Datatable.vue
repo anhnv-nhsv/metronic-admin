@@ -89,7 +89,7 @@
             ><select
               name="kt_customers_table_length"
               class="form-select form-select-sm form-select-solid"
-              v-model="pagination.rowsPerPage"
+              v-model="paginationObj.rowsPerPage"
             >
               <option value="10">10</option>
               <option value="25">25</option>
@@ -111,10 +111,11 @@
           background
           layout="prev, pager, next"
           @current-change="setCurrent"
+          :current-page="paginationObj.pageNo"
           :hide-on-single-page="true"
           :page-count="pages"
-          :page-size="parseInt(pagination.rowsPerPage)"
-          :total="pagination.total"
+          :page-size="parseInt(paginationObj.rowsPerPage)"
+          :total="paginationObj.totalPages"
         >
         </el-pagination>
       </div>
@@ -123,7 +124,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, onMounted, watch } from "vue";
+import {computed, defineComponent, ref, onMounted, watch, toRaw, onUpdated} from "vue";
 import arraySort from "array-sort";
 
 interface IPagination {
@@ -139,38 +140,49 @@ export default defineComponent({
     tableData: { type: Array, required: true },
     enableItemsPerPageDropdown: Boolean,
     rowsPerPage: Number,
+    pagination: { type: Object, required: false }
   },
   components: {},
-  setup(props) {
-    const data = ref(props.tableData);
+  setup(props, ctx) {
+    let data = ref(props.tableData);
+    let getItems = ref(JSON.parse(JSON.stringify(data.value)));
+    const paginationData = ref(props.pagination);
+    let paginationObj = ref(JSON.parse(JSON.stringify(paginationData.value)));
     const currentSort = ref<string>("");
     const click = ref<number>(1);
-    const pagination = ref<IPagination>({
-      page: 1,
-      total: 0,
-      rowsPerPage: 10,
+
+    watch(() => props.tableData, (newVal, oldVal) => {
+      getItems.value = newVal;
     });
 
-    watch(data.value, () => {
-      pagination.value.total = data.value.length;
+    watch(() => props.pagination, (newVal, oldVal) => {
+      paginationObj.value = newVal;
     });
     onMounted(() => {
-      pagination.value.rowsPerPage = props.rowsPerPage ? props.rowsPerPage : 10;
-      pagination.value.total = data.value.length;
+      // paginationObj.value.rowsPerPage = props.rowsPerPage ? props.rowsPerPage : 10;
+      // paginationObj.value.total = data.value['totalCount'];
     });
 
-    const getItems = computed(() => {
-      const clone = JSON.parse(JSON.stringify(data.value));
-      const startFrom =
-        pagination.value.page * pagination.value.rowsPerPage -
-        pagination.value.rowsPerPage;
-      return clone.splice(startFrom, pagination.value.rowsPerPage);
-    });
+    // let getItems = computed(() => {
+    //   const clone = JSON.parse(JSON.stringify(data.value));
+    //   console.log(clone)
+    //   return clone;
+    //   // const startFrom =
+    //   //   paginationObj.value.page * paginationObj.value.rowsPerPage -
+    //   //   paginationObj.value.rowsPerPage;
+    //   // return clone.splice(startFrom, paginationObj.value.rowsPerPage);
+    // });
+    // let paginationObj = computed(() => {
+    //   const clone = JSON.parse(JSON.stringify(paginationData.value));
+    //   return clone;
+    // });
     const pages = computed(() => {
-      return Math.ceil(pagination.value.total / pagination.value.rowsPerPage);
+      // return Math.ceil(pagination.value.total / pagination.value.rowsPerPage);
+      return toRaw(paginationObj.value).totalPages;
     });
     const setCurrent = (val) => {
-      pagination.value.page = val;
+      paginationObj.value.pageNo = val;
+      ctx.emit('change-page', val);
     };
     const sort = (columnName, sortable) => {
       if (!sortable) {
@@ -188,7 +200,7 @@ export default defineComponent({
     };
 
     return {
-      pagination,
+      paginationObj,
       pages,
       setCurrent,
       getItems,

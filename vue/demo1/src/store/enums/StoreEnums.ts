@@ -12,6 +12,8 @@ enum Actions {
   UPDATE_USER = "updateUser",
   FORGOT_PASSWORD = "forgotPassword",
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
+  GET_REQUEST_STATISTICS_ACTION = "getRequestStatisticsAction",
+  GET_CUSTOMERS_SCORE_ACTION = "getCustomersScoreAction",
 }
 
 enum Mutations {
@@ -27,6 +29,8 @@ enum Mutations {
   RESET_LAYOUT_CONFIG = "resetLayoutConfig",
   OVERRIDE_LAYOUT_CONFIG = "overrideLayoutConfig",
   OVERRIDE_PAGE_LAYOUT_CONFIG = "overridePageLayoutConfig",
+  GET_REQUEST_STATISTICS_MUTATION = "getRequestStatisticsMutation",
+  GET_CUSTOMERS_SCORE_MUTATION = "getCustomersScoreMutation",
 }
 
 export { Actions, Mutations };
