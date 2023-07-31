@@ -1,24 +1,12 @@
 <template>
   <div class="dataTables_wrapper dt-bootstrap4 no-footer">
     <div class="table-responsive">
-      <table
-          class="
-          table
-          align-middle
-          table-row-dashed
-          fs-6
-          gy-5
-          dataTable
-          no-footer
-        "
-          id="kt_customers_table"
-          role="grid"
-      >
+      <table class="table table-striped align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_customers_table" role="grid">
         <!--begin::Table head-->
         <thead>
         <template v-for="(row, i) in tableHeader" :key="i">
           <!--begin::Table row-->
-          <tr class="text-center text-gray-400 fw-bolder fs-7 text-uppercase gs-0" role="row">
+          <tr class="text-center text-gray-800 fw-bolder fs-7 text-uppercase gs-0" role="row">
             <template v-for="(cell, i) in row" :key="i">
               <th
                   :class="[
@@ -37,9 +25,9 @@
         </thead>
         <!--end::Table head-->
         <!--begin::Table body-->
-        <tbody class="fw-bold text-gray-600">
+        <tbody class="">
         <template v-for="(item, i) in getItems" :key="i">
-          <tr class="odd">
+          <tr>
             <template v-for="(cell, i) in tableHeaderFlattened" :key="i">
               <td class="text-center">
                 <slot :name="`cell-${cell.key}`" :row="item">
@@ -96,7 +84,7 @@
             layout="prev, pager, next"
             @current-change="setCurrent"
             :current-page="paginationObj.pageNo"
-            :hide-on-single-page="true"
+            :hide-on-single-page="false"
             :page-count="pages"
             :page-size="parseInt(paginationObj.rowsPerPage)"
             :total="paginationObj.totalPages"
@@ -109,8 +97,6 @@
 
 <script lang="ts">
 import {computed, defineComponent, ref, onMounted, watch, toRaw, onUpdated} from "vue";
-import arraySort from "array-sort";
-import {get} from "object-path";
 
 interface IPagination {
   page: number;

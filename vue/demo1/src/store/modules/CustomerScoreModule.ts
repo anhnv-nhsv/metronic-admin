@@ -6,9 +6,14 @@ import ApiService from "@/core/services/ApiService";
 export default class CustomerScoreModule extends VuexModule {
 
   customersScoreResp = [];
+  syncKalapaStatusCode = -1;
 
   get getCustomersScore() {
     return JSON.parse(JSON.stringify(this.customersScoreResp));
+  }
+
+  get getSyncKalapaStatusCode() {
+    return this.syncKalapaStatusCode;
   }
 
   @Mutation
@@ -16,12 +21,54 @@ export default class CustomerScoreModule extends VuexModule {
     this.customersScoreResp = response;
   }
 
+  @Mutation
+  [Mutations.SYNC_KALAPA_SCORE_MUTATION](response) {
+    this.syncKalapaStatusCode = response;
+  }
+
+  @Mutation
+  [Mutations.EXPORT_CUSTOMERS_SCORE_MUTATION](response) {
+    console.log(response)
+  }
+
   @Action
   [Actions.GET_CUSTOMERS_SCORE_ACTION](params) {
     return new Promise<void>((resolve, reject) => {
       ApiService.query("/account-info", params)
         .then((res) => {
-          this.context.commit(Mutations.GET_REQUEST_STATISTICS_MUTATION, res.data);
+          this.context.commit(Mutations.GET_CUSTOMERS_SCORE_MUTATION, res.data);
+          resolve();
+        })
+        .catch((err) => {
+          this.context.commit(Mutations.SET_ERROR, err);
+          reject();
+        });
+    });
+  }
+
+  @Action
+  [Actions.SYNC_KALAPA_SCORE_ACTION](params) {
+    return new Promise<void>((resolve, reject) => {
+      ApiService.post("/account-info/sync-kalapa", params)
+        .then((res) => {
+          console.log(res)
+          this.context.commit(Mutations.SYNC_KALAPA_SCORE_MUTATION, res.status);
+          resolve();
+        })
+        .catch((err) => {
+          this.context.commit(Mutations.SET_ERROR, err);
+          reject();
+        });
+    });
+  }
+
+  @Action
+  [Actions.EXPORT_CUSTOMERS_SCORE_ACTION](params) {
+    return new Promise<void>((resolve, reject) => {
+      ApiService.query("/account-info/export/excel", params)
+        .then((res) => {
+          console.log(res)
+          this.context.commit(Mutations.EXPORT_CUSTOMERS_SCORE_MUTATION, res);
           resolve();
         })
         .catch((err) => {

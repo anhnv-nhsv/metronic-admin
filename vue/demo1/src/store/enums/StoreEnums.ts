@@ -14,6 +14,8 @@ enum Actions {
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
   GET_REQUEST_STATISTICS_ACTION = "getRequestStatisticsAction",
   GET_CUSTOMERS_SCORE_ACTION = "getCustomersScoreAction",
+  SYNC_KALAPA_SCORE_ACTION = "syncKalapaScoreAction",
+  EXPORT_CUSTOMERS_SCORE_ACTION = "exportCustomerScoreAction",
 }
 
 enum Mutations {
@@ -31,6 +33,8 @@ enum Mutations {
   OVERRIDE_PAGE_LAYOUT_CONFIG = "overridePageLayoutConfig",
   GET_REQUEST_STATISTICS_MUTATION = "getRequestStatisticsMutation",
   GET_CUSTOMERS_SCORE_MUTATION = "getCustomersScoreMutation",
+  SYNC_KALAPA_SCORE_MUTATION = "syncKalapaScoreMutation",
+  EXPORT_CUSTOMERS_SCORE_MUTATION = "exportCustomerScoreMutation",
 }
 
 export { Actions, Mutations };

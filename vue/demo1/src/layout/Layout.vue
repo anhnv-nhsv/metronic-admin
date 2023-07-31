@@ -118,9 +118,9 @@ export default defineComponent({
 
     onMounted(() => {
       //check if current user is authenticated
-      if (!store.getters.isUserAuthenticated) {
-        router.push({ name: "sign-in" });
-      }
+      // if (!store.getters.isUserAuthenticated) {
+      //   router.push({ name: "sign-in" });
+      // }
 
       DrawerComponent.bootstrap();
       ScrollComponent.bootstrap();
@@ -142,9 +142,9 @@ export default defineComponent({
         DrawerComponent.hideAll();
 
         // check if current user is authenticated
-        if (!store.getters.isUserAuthenticated) {
-          router.push({ name: "sign-in" });
-        }
+        // if (!store.getters.isUserAuthenticated) {
+        //   router.push({ name: "sign-in" });
+        // }
 
         removeModalBackdrop();
       }

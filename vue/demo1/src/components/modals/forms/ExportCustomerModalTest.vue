@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="kt_customers_export_modal"
+    id="kt_customers_export_test_modal"
     tabindex="-1"
     aria-hidden="true"
   >
@@ -17,7 +17,7 @@
 
           <!--begin::Close-->
           <div
-            id="kt_customers_export_close"
+            id="kt_customers_export_test_close"
             data-bs-dismiss="modal"
             class="btn btn-icon btn-sm btn-active-icon-primary"
           >
@@ -110,7 +110,7 @@
             <div class="text-center">
               <button
                 type="reset"
-                id="kt_customers_export_cancel"
+                id="kt_customers_export_test_cancel"
                 class="btn btn-light me-3"
               >
                 Discard
@@ -160,7 +160,7 @@ import { defineComponent, reactive, toRefs, ref } from "vue";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default defineComponent({
-  name: "export-customers-modal",
+  name: "export-customers-test-modal",
   components: {},
   setup() {
     const formRef = ref<null | HTMLFormElement>(null);

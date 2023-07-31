@@ -187,17 +187,18 @@
     </div>
   </div>
 
-  <ExportCustomerModal></ExportCustomerModal>
+<!--  <ExportCustomerModal></ExportCustomerModal>-->
+  <ExportCustomersTestModal />
   <AddCustomerModal></AddCustomerModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import Datatable from "@/components/kt-datatable/Datatable.vue";
-import ExportCustomerModal from "@/components/modals/forms/ExportCustomerModal.vue";
 import AddCustomerModal from "@/components/modals/forms/AddCustomerModal.vue";
 import { MenuComponent } from "@/assets/ts/components";
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+import ExportCustomersTestModal from "@/components/modals/forms/ExportCustomerModalTest.vue";
 
 interface ICustomer {
   id: number;
@@ -215,8 +216,8 @@ interface ICustomer {
 export default defineComponent({
   name: "customers-listing",
   components: {
+    ExportCustomersTestModal,
     Datatable,
-    ExportCustomerModal,
     AddCustomerModal,
   },
   setup() {

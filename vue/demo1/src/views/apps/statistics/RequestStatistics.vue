@@ -15,7 +15,7 @@
         <!--          />-->
         <!--        </div>-->
         <!--end::Search-->
-        <form class="form" autoComplete="on">
+        <form class="form" autoComplete="on" @submit.prevent="submitSearch">
           <div class="row">
             <div
                 class="col-md-3 d-flex align-items-center position-relative my-1"
@@ -53,7 +53,7 @@
             <div
                 class="col-md-3 d-flex align-items-center position-relative my-1"
             >
-              <button @click="submitSearch" type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 <span class="indicator-label">Search</span>
                 <span v-if="loading" class="indicator-progress"
                 >Please wait...

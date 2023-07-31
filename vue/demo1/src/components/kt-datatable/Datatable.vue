@@ -181,6 +181,7 @@ export default defineComponent({
       return toRaw(paginationObj.value).totalPages;
     });
     const setCurrent = (val) => {
+      console.log(val)
       paginationObj.value.pageNo = val;
       ctx.emit('change-page', val);
     };
