@@ -2,6 +2,7 @@
   <div
       class="modal fade"
       id="kt_customer_export_modal"
+      ref="exportCustomerModalRef"
       tabindex="-1"
       aria-hidden="true"
   >
@@ -33,7 +34,7 @@
         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
           <!--begin::Form-->
           <el-form
-              @submit.prevent="submit()"
+              @submit.prevent="submitExport"
               :model="checkedTypes"
               ref="formRef"
           >
@@ -112,6 +113,8 @@
 import {defineComponent, ref} from "vue";
 import store from "@/store";
 import {Actions} from "@/store/enums/StoreEnums";
+import {hideModal} from "@/core/helpers/dom";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default defineComponent({
   name: "export-customer-modal",
@@ -139,6 +142,7 @@ export default defineComponent({
       }
     ];
     const loading = ref<boolean>(false);
+    const exportCustomerModalRef = ref<null | HTMLElement>(null);
 
     async function exportCustomersScoreAPI(searchType?: string, idNo?: string, phone?: string, fullName?: string) {
       console.log(`call API`)
@@ -150,17 +154,46 @@ export default defineComponent({
           name: fullName ? fullName : '',
           searchType: searchType ? searchType : '',
         },
+        responseType: 'blob',
       });
+      const exportCustomerResp = store.getters.getExportCustomerResp;
       loading.value = false;
+      return exportCustomerResp;
     };
 
-    const submit = () => {
+    const submitExport = async () => {
       console.log(`submit export ${checkedTypes.value}`)
-      loading.value = true;
-      setTimeout(() => {
-        exportCustomersScoreAPI(checkedTypes.value.join(","));
-        loading.value = false;
-      }, 1000);
+      const exportCustomerResp = await exportCustomersScoreAPI(checkedTypes.value.join(","));
+      if (exportCustomerResp.status == 200) {
+        console.log(exportCustomerResp);
+        let filename = "";
+        let disposition = exportCustomerResp.headers['content-disposition'];
+        if (disposition && disposition.indexOf('attachment') !== -1) {
+          let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          let matches = filenameRegex.exec(disposition);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, '');
+          }
+        }
+        const temp = window.URL.createObjectURL(new Blob([exportCustomerResp.data]));
+        const link = document.createElement('a');
+        link.href = temp;
+        link.setAttribute('download', filename); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      } else {
+        Swal.fire({
+          text: "Export failed. Please contact administrator!",
+          icon: "error",
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn btn-primary",
+          },
+        }).then(() => {
+          hideModal(exportCustomerModalRef.value);
+        });
+      }
     }
 
     const handleCheckAllChange = (val: boolean) => {
@@ -176,7 +209,7 @@ export default defineComponent({
     }
 
     return {
-      submit,
+      submitExport,
       formData,
       loading,
       checkAll,
@@ -185,6 +218,7 @@ export default defineComponent({
       exportTypes,
       handleCheckAllChange,
       handleCheckedTypesChange,
+      exportCustomerModalRef
     }
   }
 });

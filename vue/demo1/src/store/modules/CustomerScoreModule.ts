@@ -7,6 +7,7 @@ export default class CustomerScoreModule extends VuexModule {
 
   customersScoreResp = [];
   syncKalapaStatusCode = -1;
+  exportCustomerResp = -1;
 
   get getCustomersScore() {
     return JSON.parse(JSON.stringify(this.customersScoreResp));
@@ -14,6 +15,10 @@ export default class CustomerScoreModule extends VuexModule {
 
   get getSyncKalapaStatusCode() {
     return this.syncKalapaStatusCode;
+  }
+
+  get getExportCustomerResp() {
+    return this.exportCustomerResp;
   }
 
   @Mutation
@@ -28,7 +33,7 @@ export default class CustomerScoreModule extends VuexModule {
 
   @Mutation
   [Mutations.EXPORT_CUSTOMERS_SCORE_MUTATION](response) {
-    console.log(response)
+    this.exportCustomerResp = response;
   }
 
   @Action
