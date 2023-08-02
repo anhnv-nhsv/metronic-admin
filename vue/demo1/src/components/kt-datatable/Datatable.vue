@@ -2,12 +2,12 @@
   <div class="dataTables_wrapper dt-bootstrap4 no-footer">
     <div class="table-responsive">
       <table
-        class="table table-striped table-bordered table-rounded border align-middle fs-6 gy-5 dataTable no-footer"
+        class="table table-striped table-bordered border align-middle fs-6 gy-5 dataTable no-footer"
         id="kt_customers_table"
         role="grid"
       >
         <!--begin::Table head-->
-        <thead>
+        <thead style="background-color: #ffc342">
         <!--begin::Table row-->
         <tr
           class="text-center text-gray-800 fw-bolder fs-7 text-uppercase gs-0"
@@ -31,7 +31,7 @@
         </thead>
         <!--end::Table head-->
         <!--begin::Table body-->
-        <tbody class="fw-bold text-gray-600">
+        <tbody class="">
         <template v-if="!isEmptyTableData">
           <template v-for="(item, i) in getItems" :key="i">
             <tr class="odd">

@@ -5,7 +5,7 @@
 // Table
 .table {
 	width: 100%;
-	
+
 	>:not(:last-child)>:last-child>* {
 		border-bottom-color: inherit;
 	}
@@ -100,7 +100,7 @@
 	// Row border colors
 	@each $color, $value in $grays {
 		&.table-row-gray-#{$color} {
-			tr { 
+			tr {
 				border-bottom-color: $value;
 			}
 		}
