@@ -1,7 +1,7 @@
 <template>
   <div class="dataTables_wrapper dt-bootstrap4 no-footer">
     <div class="table-responsive">
-      <table class="table table-striped align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
+      <table class="table table-striped table-bordered table-rounded border align-middle fs-6 gy-5 dataTable no-footer"
              id="kt_customers_table" role="grid">
         <!--begin::Table head-->
         <thead>

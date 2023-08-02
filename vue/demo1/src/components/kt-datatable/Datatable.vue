@@ -2,15 +2,7 @@
   <div class="dataTables_wrapper dt-bootstrap4 no-footer">
     <div class="table-responsive">
       <table
-        class="
-          table
-          align-middle
-          table-row-dashed
-          fs-6
-          gy-5
-          dataTable
-          no-footer
-        "
+        class="table table-striped table-bordered table-rounded border align-middle fs-6 gy-5 dataTable no-footer"
         id="kt_customers_table"
         role="grid"
       >
@@ -18,14 +10,14 @@
         <thead>
         <!--begin::Table row-->
         <tr
-          class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0"
+          class="text-center text-gray-800 fw-bolder fs-7 text-uppercase gs-0"
           role="row"
         >
           <template v-for="(cell, i) in tableHeader" :key="i">
             <th
               :class="[
                   cell.name && 'min-w-125px',
-                  'text-center'
+                  'text-middle'
                 ]"
               tabindex="0"
               rowspan="1"

@@ -44,7 +44,7 @@
   </div>
   <!-- end:: Body -->
   <KTScrollTop></KTScrollTop>
-  <KTExplore></KTExplore>
+<!--  <KTExplore></KTExplore>-->
   <KTDrawerMessenger></KTDrawerMessenger>
   <KTUserMenu></KTUserMenu>
   <KTCreateApp></KTCreateApp>
@@ -93,7 +93,7 @@ export default defineComponent({
     KTScrollTop,
     KTCreateApp,
     KTUserMenu,
-    KTExplore,
+    // KTExplore,
     KTDrawerMessenger,
     KTLoader,
   },

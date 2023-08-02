@@ -8,12 +8,15 @@ const config: LayoutConfigTypes = {
     type: "default",
     primaryColor: "#009EF7",
     logo: {
-      dark: "media/logos/logo-1-dark.svg",
-      light: "media/logos/logo-1.svg",
+      // dark: "media/logos/logo-1-dark.svg",
+      // light: "media/logos/logo-1.svg",
+      dark: "media/logos/nhsv_logo.png",
+      light: "media/logos/nhsv_logo.png",
     },
   },
   loader: {
-    logo: "media/logos/logo-1-dark.svg",
+    // logo: "media/logos/logo-1-dark.svg",
+    logo: "media/logos/nhsv_logo.png",
     display: true,
     type: "default",
   },

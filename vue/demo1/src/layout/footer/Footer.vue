@@ -16,29 +16,29 @@
     >
       <!--begin::Copyright-->
       <div class="text-dark order-2 order-md-1">
-        <span class="text-muted fw-bold me-1">2021&copy;</span>
+        <span class="text-muted fw-bold me-1">{{ currentYear }} &copy; </span>
         <a
-          href="https://keenthemes.com/"
+          href="https://nhsv.vn/"
           target="_blank"
           class="text-gray-800 text-hover-primary"
-          >Keenthemes</a
+          >NHSV</a
         >
       </div>
       <!--end::Copyright-->
 
       <!--begin::Menu-->
       <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
-        <li class="menu-item">
-          <a href="#" target="_blank" class="menu-link px-2">About</a>
-        </li>
+<!--        <li class="menu-item">-->
+<!--          <a href="#" target="_blank" class="menu-link px-2">About</a>-->
+<!--        </li>-->
 
-        <li class="menu-item">
-          <a href="#" target="_blank" class="menu-link px-2">Support</a>
-        </li>
+<!--        <li class="menu-item">-->
+<!--          <a href="#" target="_blank" class="menu-link px-2">Support</a>-->
+<!--        </li>-->
 
-        <li class="menu-item">
-          <a href="#" target="_blank" class="menu-link px-2">Purchase</a>
-        </li>
+<!--        <li class="menu-item">-->
+<!--          <a href="#" target="_blank" class="menu-link px-2">Purchase</a>-->
+<!--        </li>-->
       </ul>
       <!--end::Menu-->
     </div>
@@ -48,14 +48,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent, ref} from "vue";
 import { footerWidthFluid } from "@/core/helpers/config";
+import moment from "moment/moment";
 
 export default defineComponent({
   name: "KTFooter",
   setup() {
+    const currentYear = ref(moment().format('YYYY'));
     return {
       footerWidthFluid,
+      currentYear,
     };
   },
 });
