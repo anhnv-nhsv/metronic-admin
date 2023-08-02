@@ -16,44 +16,31 @@
       >
         <!--begin::Table head-->
         <thead>
-          <!--begin::Table row-->
-          <tr
-            class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0"
-            role="row"
-          >
-            <template v-for="(cell, i) in tableHeader" :key="i">
-              <th
-                @click="
-                  sort(
-                    cell.sortingField ? cell.sortingField : cell.key,
-                    cell.sortable
-                  )
-                "
-                :class="[
+        <!--begin::Table row-->
+        <tr
+          class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0"
+          role="row"
+        >
+          <template v-for="(cell, i) in tableHeader" :key="i">
+            <th
+              :class="[
                   cell.name && 'min-w-125px',
-                  cell.sortable && 'sorting',
-                  tableHeader.length - 1 === i && 'text-end',
-                  currentSort ===
-                    `${cell.sortingField ? cell.sortingField : cell.key}2` &&
-                    'sorting_desc',
-                  currentSort ===
-                    `${cell.sortingField ? cell.sortingField : cell.key}1` &&
-                    'sorting_asc',
+                  'text-center'
                 ]"
-                tabindex="0"
-                rowspan="1"
-                colspan="1"
-                style="cursor: pointer"
-              >
-                {{ cell.name }}
-              </th>
-            </template>
-          </tr>
-          <!--end::Table row-->
+              tabindex="0"
+              rowspan="1"
+              colspan="1"
+            >
+              {{ cell.name }}
+            </th>
+          </template>
+        </tr>
+        <!--end::Table row-->
         </thead>
         <!--end::Table head-->
         <!--begin::Table body-->
         <tbody class="fw-bold text-gray-600">
+        <template v-if="!isEmptyTableData">
           <template v-for="(item, i) in getItems" :key="i">
             <tr class="odd">
               <template v-for="(cell, i) in tableHeader" :key="i">
@@ -66,6 +53,12 @@
               <!--end::Item=-->
             </tr>
           </template>
+        </template>
+        <template v-else>
+          <tr class="odd">
+            <td colspan="8" class="dataTables_empty">No data found</td>
+          </tr>
+        </template>
         </tbody>
         <!--end::Table body-->
       </table>
@@ -80,24 +73,24 @@
           justify-content-center justify-content-md-start
         "
       >
-        <div
-          v-if="enableItemsPerPageDropdown"
-          class="dataTables_length"
-          id="kt_customers_table_length"
-        >
-          <label
-            ><select
-              name="kt_customers_table_length"
-              class="form-select form-select-sm form-select-solid"
-              v-model="paginationObj.rowsPerPage"
-            >
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select></label
-          >
-        </div>
+        <!--        <div-->
+        <!--          v-if="enableItemsPerPageDropdown"-->
+        <!--          class="dataTables_length"-->
+        <!--          id="kt_customers_table_length"-->
+        <!--        >-->
+        <!--          <label-->
+        <!--            ><select-->
+        <!--              name="kt_customers_table_length"-->
+        <!--              class="form-select form-select-sm form-select-solid"-->
+        <!--              v-model="paginationObj.pageSize"-->
+        <!--            >-->
+        <!--              <option value="10">10</option>-->
+        <!--              <option value="25">25</option>-->
+        <!--              <option value="50">50</option>-->
+        <!--              <option value="100">100</option>-->
+        <!--            </select></label-->
+        <!--          >-->
+        <!--        </div>-->
       </div>
       <div
         class="
@@ -108,13 +101,14 @@
         "
       >
         <el-pagination
+          v-if="!isEmptyTableData"
           background
           layout="prev, pager, next"
           @current-change="setCurrent"
           :current-page="paginationObj.pageNo"
-          :hide-on-single-page="true"
+          :hide-on-single-page="false"
           :page-count="pages"
-          :page-size="parseInt(paginationObj.rowsPerPage)"
+          :page-size="parseInt(paginationObj.pageSize)"
           :total="paginationObj.totalPages"
         >
         </el-pagination>
@@ -125,22 +119,14 @@
 
 <script lang="ts">
 import {computed, defineComponent, ref, onMounted, watch, toRaw, onUpdated} from "vue";
-import arraySort from "array-sort";
-
-interface IPagination {
-  page: number;
-  total: number;
-  rowsPerPage: number;
-}
 
 export default defineComponent({
   name: "datatable",
   props: {
-    tableHeader: { type: Array, required: true },
-    tableData: { type: Array, required: true },
+    tableHeader: { type: Array, required: true, default: () => [] },
+    tableData: { type: Array, required: true, default: () => [] },
     enableItemsPerPageDropdown: Boolean,
-    rowsPerPage: Number,
-    pagination: { type: Object, required: false }
+    pagination: { type: Object, required: false, default: () => {return {}} }
   },
   components: {},
   setup(props, ctx) {
@@ -148,56 +134,28 @@ export default defineComponent({
     let getItems = ref(JSON.parse(JSON.stringify(data.value)));
     const paginationData = ref(props.pagination);
     let paginationObj = ref(JSON.parse(JSON.stringify(paginationData.value)));
-    const currentSort = ref<string>("");
-    const click = ref<number>(1);
+    let isEmptyTableData = ref(getItems.value.length === 0);
 
     watch(() => props.tableData, (newVal, oldVal) => {
       getItems.value = newVal;
+      isEmptyTableData.value = getItems.value.length === 0;
     });
 
     watch(() => props.pagination, (newVal, oldVal) => {
-      paginationObj.value = newVal;
+        paginationObj.value = newVal;
     });
     onMounted(() => {
       // paginationObj.value.rowsPerPage = props.rowsPerPage ? props.rowsPerPage : 10;
       // paginationObj.value.total = data.value['totalCount'];
     });
 
-    // let getItems = computed(() => {
-    //   const clone = JSON.parse(JSON.stringify(data.value));
-    //   console.log(clone)
-    //   return clone;
-    //   // const startFrom =
-    //   //   paginationObj.value.page * paginationObj.value.rowsPerPage -
-    //   //   paginationObj.value.rowsPerPage;
-    //   // return clone.splice(startFrom, paginationObj.value.rowsPerPage);
-    // });
-    // let paginationObj = computed(() => {
-    //   const clone = JSON.parse(JSON.stringify(paginationData.value));
-    //   return clone;
-    // });
     const pages = computed(() => {
       // return Math.ceil(pagination.value.total / pagination.value.rowsPerPage);
       return toRaw(paginationObj.value).totalPages;
     });
     const setCurrent = (val) => {
-      console.log(val)
       paginationObj.value.pageNo = val;
       ctx.emit('change-page', val);
-    };
-    const sort = (columnName, sortable) => {
-      if (!sortable) {
-        return;
-      }
-
-      if (click.value === 2) {
-        click.value = 1;
-        arraySort(data.value, columnName, { reverse: false });
-      } else {
-        click.value++;
-        arraySort(data.value, columnName, { reverse: true });
-      }
-      currentSort.value = columnName + click.value;
     };
 
     return {
@@ -205,8 +163,7 @@ export default defineComponent({
       pages,
       setCurrent,
       getItems,
-      sort,
-      currentSort,
+      isEmptyTableData,
     };
   },
 });
@@ -226,6 +183,7 @@ table.dataTable > thead {
   th.sorting {
     position: relative;
   }
+
   .sorting:after {
     position: absolute;
   }
