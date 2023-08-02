@@ -62,6 +62,12 @@
 	}
 
 	// Row bordered
+	&.table-bordered {
+		th,td {
+			border: 1px solid $border-color;
+		}
+	}
+
 	&.table-row-bordered {
 		tr {
 			border-bottom-width: 1px;
